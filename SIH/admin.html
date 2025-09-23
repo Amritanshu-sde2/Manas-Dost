@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manas Dost - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="app">
+
+        <!-- Admin Login Page -->
+        <section id="page-admin-login-page" class="min-h-screen flex items-center justify-center p-4">
+            <div class="w-full max-w-sm">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center text-gray-800">
+                    <h2 class="text-2xl font-bold mb-2">Admin Login</h2>
+                    <p class="text-gray-600 mb-6">Access the "Darpan" Dashboard</p>
+                    <input type="password" id="admin-password" placeholder="Enter Access Code" class="w-full p-3 border rounded-lg text-center">
+                    <button onclick="loginAdmin()" class="w-full mt-4 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition">Login</button>
+                                       <p class="text-sm text-gray-500 mt-4"><button onclick="window.location.href='webPro.html'" class="hover:underline">← Back to Home</button></p>
+                    <p id="admin-error" class="text-red-500 text-sm mt-2 hidden">Invalid Access Code.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Panel Section -->
+        <section id="page-admin-panel" class="hidden min-h-screen">
+            <div class="flex h-screen bg-gray-50">
+                <!-- Admin Sidebar -->
+                <aside class="w-64 bg-white shadow-md flex-col hidden md:flex">
+                    <div class="p-6 flex items-center space-x-2 border-b border-gray-200">
+                        <div class="w-10 h-10 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center text-white text-lg font-bold">D</div>
+                        <h1 class="text-xl font-bold text-gray-800">Darpan</h1>
+                    </div>
+                    <nav class="flex-grow p-4 space-y-2">
+                        <button onclick="showAdminTab('admin-analytics')" class="admin-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-semibold"><span>📈</span><span>Analytics</span></button>
+                        <button onclick="showAdminTab('admin-insights')" class="admin-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>💡</span><span>AI Insights</span></button>
+                        <button onclick="showAdminTab('admin-community')" class="admin-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>💬</span><span>Community Feed</span></button>
+                        <button onclick="showAdminTab('admin-resources')" class="admin-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>📚</span><span>Resource Hub</span></button>
+                        <button onclick="showAdminTab('admin-counselors')" class="admin-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>🧑‍⚕️</span><span>Counselors</span></button>
+                    </nav>
+                    <div class="p-4 border-t border-gray-200">
+                        <button onclick="logoutAdmin()" class="w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100"><span>🚪</span><span>Logout</span></button>
+                    </div>
+                </aside>
+                <!-- Admin Main Content -->
+                <main class="flex-1 flex flex-col">
+                     <header class="bg-white p-4 border-b border-gray-200 flex justify-between items-center">
+                        <h2 id="admin-header-title" class="text-xl font-bold text-gray-800">Analytics Dashboard</h2>
+                     </header>
+                     <div class="flex-1 p-4 md:p-8 overflow-y-auto no-scrollbar">
+                        <!-- Admin Analytics Tab -->
+                        <div id="tab-admin-analytics" class="admin-tab">
+                            <div class="flex flex-wrap gap-4 mb-6">
+                                <select id="filter-year" class="bg-white border border-gray-300 rounded-lg p-2 shadow-sm">
+                                    <option value="all">All Academic Years</option>
+                                    <option value="1">1st Year</option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd Year</option>
+                                    <option value="4">4th Year</option>
+                                </select>
+                                <select id="filter-dept" class="bg-white border border-gray-300 rounded-lg p-2 shadow-sm">
+                                    <option value="all">All Departments</option>
+                                    <option value="eng">Engineering</option>
+                                    <option value="arts">Arts & Sciences</option>
+                                    <option value="biz">Business</option>
+                                </select>
+                                <button onclick="applyFilters()" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">Apply Filters</button>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="bg-white p-6 rounded-2xl shadow-lg"><h4 class="text-gray-500 text-sm font-medium">Total Users</h4><p class="text-3xl font-bold text-gray-800">1,428</p></div>
+                                <div class="bg-white p-6 rounded-2xl shadow-lg"><h4 class="text-gray-500 text-sm font-medium">Daily Active Users</h4><p class="text-3xl font-bold text-gray-800">357</p></div>
+                                <div class="bg-white p-6 rounded-2xl shadow-lg"><h4 class="text-gray-500 text-sm font-medium">Sessions Booked (Week)</h4><p class="text-3xl font-bold text-green-600">42</p></div>
+                                <div class="bg-white p-6 rounded-2xl shadow-lg"><h4 class="text-gray-500 text-sm font-medium">Avg. App Usage</h4><p class="text-3xl font-bold text-gray-800">12m 15s</p></div>
+                                <div class="lg:col-span-3 bg-white p-6 rounded-2xl shadow-lg"><canvas id="issues-chart"></canvas></div>
+                                <div class="bg-white p-6 rounded-2xl shadow-lg"><canvas id="engagement-chart"></canvas></div>
+                             </div>
+                        </div>
+                        <!-- AI Insights Tab -->
+                        <div id="tab-admin-insights" class="admin-tab hidden">
+                            <h3 class="text-2xl font-bold mb-4 text-gray-800">AI-Powered Conversation Insights</h3>
+                            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                <p class="text-sm text-gray-500 mb-4">Gemini API generates thematic summaries from thousands of anonymous chat logs, protecting privacy while revealing key student concerns.</p>
+                                <button id="generate-insights-btn" class="bg-purple-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-purple-700 transition">Generate New Summary</button>
+                                <div id="insights-output" class="mt-6 p-4 bg-gray-50 rounded-lg border hidden">
+                                    <h4 class="font-bold text-lg mb-2">Summary of Recent Concerns:</h4>
+                                    <div id="insights-content" class="prose prose-sm max-w-none"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Admin Community Tab -->
+                        <div id="tab-admin-community" class="admin-tab hidden">
+                             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                                <div class="lg:col-span-2">
+                                    <h3 class="text-2xl font-bold mb-4 text-gray-800">Community Feed Moderation</h3>
+                                    <div id="admin-posts-container" class="space-y-6"></div>
+                                </div>
+                                <div>
+                                    <div class="bg-white p-6 rounded-2xl shadow-lg sticky top-8">
+                                        <h4 class="text-xl font-semibold text-gray-800 mb-2">Post an Announcement</h4>
+                                        <p class="text-sm text-gray-500 mb-4">Share important information or messages of support with all students.</p>
+                                        <textarea id="admin-post-textarea" class="w-full mt-4 p-3 border rounded-lg h-32 bg-gray-50 border-gray-300 text-gray-800" placeholder="e.g., Reminder: Mid-term wellness workshop this Friday..."></textarea>
+                                        <button id="submit-admin-post-btn" class="w-full mt-4 bg-blue-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-blue-700 transition">Post as Administration</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Resource Hub Management Tab -->
+                        <div id="tab-admin-resources" class="admin-tab hidden">
+                            <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-bold text-gray-800">Resource Hub Management</h3>
+                                <button onclick="openResourceModal()" class="bg-green-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-green-700 transition">Add New Resource</button>
+                            </div>
+                            <div id="resource-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                        </div>
+                         <!-- Counselors Tab -->
+                        <div id="tab-admin-counselors" class="admin-tab hidden">
+                             <div class="flex justify-between items-center mb-6">
+                                <h3 class="text-2xl font-bold text-gray-800">Counselor Management</h3>
+                                <button onclick="openCounselorModal()" class="bg-green-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-green-700 transition">Add New Counselor</button>
+                            </div>
+                            <div id="counselor-list" class="space-y-4"></div>
+                        </div>
+                     </div>
+                </main>
+            </div>
+        </section>
+        
+        <!-- Resource Modal -->
+        <div id="resource-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6">
+                <h4 id="resource-modal-title" class="text-xl font-semibold text-gray-800 mb-4">Add New Resource</h4>
+                <form id="resource-form">
+                    <input type="hidden" id="resource-id">
+                    <div><label class="block font-semibold text-gray-700 mb-1">Title</label><input id="resource-title" type="text" class="w-full p-2 border rounded-lg" required></div>
+                    <div class="mt-4"><label class="block font-semibold text-gray-700 mb-1">Type</label><select id="resource-type" class="w-full p-2 border rounded-lg"><option value="Article">Article</option><option value="Video">Video</option></select></div>
+                    <div class="mt-4"><label class="block font-semibold text-gray-700 mb-1">Content / URL</label><textarea id="resource-content" class="w-full p-2 border rounded-lg h-24" placeholder="Enter full article text or a YouTube video URL"></textarea></div>
+                    <div class="mt-6 flex justify-end space-x-3"><button type="button" onclick="closeResourceModal()" class="bg-gray-200 text-gray-800 font-semibold px-5 py-2 rounded-lg">Cancel</button><button type="submit" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg">Save Resource</button></div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Counselor Modal -->
+        <div id="counselor-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6">
+                <h4 id="counselor-modal-title" class="text-xl font-semibold text-gray-800 mb-4">Add New Counselor</h4>
+                <form id="counselor-form">
+                    <input type="hidden" id="counselor-id">
+                    <div><label class="block font-semibold text-gray-700 mb-1">Full Name</label><input id="counselor-name" type="text" class="w-full p-2 border rounded-lg" required></div>
+                    <div class="mt-4"><label class="block font-semibold text-gray-700 mb-1">Specialty</label><input id="counselor-specialty" type="text" class="w-full p-2 border rounded-lg" placeholder="e.g., Anxiety & Stress Management" required></div>
+                    <div class="mt-6 flex justify-end space-x-3"><button type="button" onclick="closeCounselorModal()" class="bg-gray-200 text-gray-800 font-semibold px-5 py-2 rounded-lg">Cancel</button><button type="submit" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg">Save Counselor</button></div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const adminPages = ['admin-login-page', 'admin-panel'];
+        const adminTabs = ['admin-analytics', 'admin-insights', 'admin-community', 'admin-resources', 'admin-counselors'];
+        const ACCESS_CODE = 'SIH2025';
+
+        // --- MOCK DATA & STATE ---
+        let communityPosts = [
+            { id: 1, author: 'Anonymous Panda', content: "Is anyone else finding it hard to cope with the pressure of final year projects? Feeling really isolated.", timestamp: '2 hours ago', supports: 12, comments: 4 },
+            { id: 2, author: 'Anonymous Owl', content: "To the person who posted about project stress: you are not alone!", timestamp: '1 hour ago', supports: 25, comments: 8 },
+            { id: 3, author: 'Anonymous Fox', content: "Just feeling really homesick this week. Any tips?", timestamp: '30 minutes ago', supports: 5, comments: 1 },
+        ];
+        let resources = [
+            { id: 1, title: '5 Tips for Managing Exam Stress', type: 'Article', content: 'Here is the full text of the article on managing exam stress...' },
+            { id: 2, title: 'Guided Meditation for Anxiety', type: 'Video', content: 'https://www.youtube.com/watch?v=O-6f5wQXSu8' },
+        ];
+         let counselors = [
+            { id: 1, name: 'Dr. Anjali Sharma', specialty: 'Anxiety & Stress Management', load: '85% Booked' },
+            { id: 2, name: 'Mr. Rohan Gupta', specialty: 'Career & Academic Counseling', load: '60% Booked' },
+        ];
+        let issuesChart, engagementChart, chartUpdateInterval;
+        const baseIssuesData = {
+            all: [75, 62, 45, 38, 30, 55], '1-eng': [85, 70, 30, 60, 80, 40], '1-arts': [60, 50, 50, 75, 90, 30],
+            '4-eng': [95, 80, 50, 40, 20, 90], '4-biz': [70, 60, 60, 30, 15, 85],
+        };
+
+        function showPage(pageId) {
+            adminPages.forEach(id => document.getElementById(`page-${id}`).classList.add('hidden'));
+            document.getElementById(`page-${pageId}`).classList.remove('hidden');
+        }
+
+        // --- AUTHENTICATION ---
+        function loginAdmin() {
+            if (document.getElementById('admin-password').value === ACCESS_CODE) {
+                showPage('admin-panel');
+                document.getElementById('admin-password').value = '';
+                renderAllAdminContent();
+            } else {
+                document.getElementById('admin-error').classList.remove('hidden');
+            }
+        }
+        function logoutAdmin() { 
+            showPage('admin-login-page'); 
+            if(issuesChart) issuesChart.destroy(); 
+            if(engagementChart) engagementChart.destroy();
+            if (chartUpdateInterval) clearInterval(chartUpdateInterval);
+        }
+
+        // --- ADMIN PANEL ---
+        function showAdminTab(tabId) {
+             adminTabs.forEach(id => document.getElementById(`tab-${id}`).classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-100', 'text-blue-700', 'font-semibold');
+                btn.classList.add('hover:bg-gray-100');
+            });
+            const button = document.querySelector(`button[onclick="showAdminTab('${tabId}')"]`);
+            button.classList.add('bg-blue-100', 'text-blue-700', 'font-semibold');
+            document.getElementById('admin-header-title').textContent = button.textContent.trim().replace(/^[^\s]+\s/, '');
+        }
+
+        // --- DYNAMIC CONTENT RENDERING ---
+        function renderAllAdminContent() {
+            renderAdminCharts(baseIssuesData.all);
+            renderAdminPosts();
+            renderResourceList();
+            renderCounselorList();
+        }
+
+        // --- COMMUNITY FORUM ---
+        function renderAdminPosts() {
+            const adminContainer = document.getElementById('admin-posts-container');
+            if(!adminContainer) return;
+            adminContainer.innerHTML = '';
+            communityPosts.forEach(post => adminContainer.appendChild(createPostElement(post)));
+        }
+        function createPostElement(post) {
+            const postEl = document.createElement('div');
+            const authorClass = post.author.includes('Admin') ? 'text-teal-600' : 'text-gray-500';
+            postEl.className = `bg-white p-5 rounded-xl shadow-md`;
+            postEl.innerHTML = `<p class="text-gray-800">${post.content}</p><div class="flex items-center justify-between mt-4 text-xs ${authorClass}"><span>Posted by: <b class="${post.author.includes('Admin') ? 'text-teal-700' : ''}">${post.author}</b></span><span>${post.timestamp}</span></div><div class="border-t border-gray-200 mt-3 pt-3 flex items-center justify-between"><div class="flex items-center space-x-6"><button class="text-blue-600 font-semibold text-sm flex items-center space-x-1 hover:text-blue-700"><span>❤️</span><span>Support (${post.supports})</span></button><button class="text-gray-600 font-semibold text-sm flex items-center space-x-1 hover:text-gray-800"><span>💬</span><span>Comment (${post.comments})</span></button></div><button onclick="deletePost(${post.id})" class="text-red-500 hover:text-red-700 text-xs font-semibold">Delete Post</button></div>`;
+            return postEl;
+        }
+        function deletePost(postId) {
+            if (confirm('Are you sure you want to delete this post?')) {
+                communityPosts = communityPosts.filter(p => p.id !== postId);
+                renderAdminPosts();
+            }
+        }
+        
+        // --- RESOURCE HUB MANAGEMENT ---
+        const resourceModal = document.getElementById('resource-modal');
+        const resourceForm = document.getElementById('resource-form');
+        const resourceList = document.getElementById('resource-list');
+        function renderResourceList() {
+            resourceList.innerHTML = '';
+            resources.forEach(res => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-4 rounded-lg shadow-md';
+                card.innerHTML = `<h5 class="font-bold">${res.title}</h5><p class="text-sm text-gray-500">${res.type}</p><div class="mt-4 flex space-x-2"><button onclick="editResource(${res.id})" class="text-sm bg-gray-200 px-3 py-1 rounded">Edit</button><button onclick="deleteResource(${res.id})" class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded">Delete</button></div>`;
+                resourceList.appendChild(card);
+            });
+        }
+        function openResourceModal(id = null) {
+            resourceForm.reset(); document.getElementById('resource-id').value = '';
+            if (id) {
+                const resource = resources.find(r => r.id === id);
+                document.getElementById('resource-modal-title').textContent = 'Edit Resource';
+                document.getElementById('resource-id').value = resource.id; document.getElementById('resource-title').value = resource.title;
+                document.getElementById('resource-type').value = resource.type; document.getElementById('resource-content').value = resource.content;
+            } else { document.getElementById('resource-modal-title').textContent = 'Add New Resource'; }
+            resourceModal.classList.remove('hidden');
+        }
+        function closeResourceModal() { resourceModal.classList.add('hidden'); }
+        function editResource(id) { openResourceModal(id); }
+        function deleteResource(id) { if (confirm('Are you sure?')) { resources = resources.filter(r => r.id !== id); renderResourceList(); } }
+        resourceForm.addEventListener('submit', (e) => { e.preventDefault(); const id = document.getElementById('resource-id').value; const newResource = { id: id ? parseInt(id) : Date.now(), title: document.getElementById('resource-title').value, type: document.getElementById('resource-type').value, content: document.getElementById('resource-content').value }; if (id) { resources = resources.map(r => r.id === newResource.id ? newResource : r); } else { resources.push(newResource); } renderResourceList(); closeResourceModal(); });
+        
+        // --- COUNSELOR MANAGEMENT ---
+        const counselorModal = document.getElementById('counselor-modal');
+        const counselorForm = document.getElementById('counselor-form');
+        function renderCounselorList() {
+            const counselorListEl = document.getElementById('counselor-list');
+            counselorListEl.innerHTML = '';
+            counselors.forEach(c => {
+                const item = document.createElement('div');
+                item.className = 'bg-white p-4 rounded-lg shadow-md flex justify-between items-center';
+                item.innerHTML = `<div><h5 class="font-bold text-lg">${c.name}</h5><p class="text-sm text-gray-500">${c.specialty}</p></div><div class="flex items-center space-x-2"><span class="text-sm font-semibold text-green-600">${c.load}</span><button onclick="removeCounselor(${c.id})" class="text-sm bg-red-100 text-red-700 px-3 py-1 rounded hover:bg-red-200">Remove</button></div>`;
+                counselorListEl.appendChild(item);
+            });
+        }
+        function openCounselorModal() { counselorForm.reset(); counselorModal.classList.remove('hidden'); }
+        function closeCounselorModal() { counselorModal.classList.add('hidden'); }
+        function removeCounselor(id) { if (confirm('Are you sure you want to remove this counselor?')) { counselors = counselors.filter(c => c.id !== id); renderCounselorList(); } }
+        counselorForm.addEventListener('submit', (e) => { e.preventDefault(); const newCounselor = { id: Date.now(), name: document.getElementById('counselor-name').value, specialty: document.getElementById('counselor-specialty').value, load: '0% Booked' }; counselors.push(newCounselor); renderCounselorList(); closeCounselorModal(); });
+        
+        // --- CHARTS & FILTERS ---
+        function applyFilters() { const year = document.getElementById('filter-year').value; const dept = document.getElementById('filter-dept').value; const key = `${year}-${dept}`; const data = baseIssuesData[key] || baseIssuesData.all; renderAdminCharts(data); }
+        function renderAdminCharts(issuesData) {
+            if (chartUpdateInterval) clearInterval(chartUpdateInterval);
+            Chart.defaults.color = '#4b5563'; Chart.defaults.font.family = "'Inter', sans-serif";
+            const issuesCtx = document.getElementById('issues-chart').getContext('2d');
+            if(issuesChart) issuesChart.destroy();
+            issuesChart = new Chart(issuesCtx, { type: 'bar', data: { labels: ['Exam Stress', 'Anxiety', 'Relationships', 'Loneliness', 'Homesickness', 'Career Worries'], datasets: [{ label: 'Top Issues Discussed', data: issuesData, backgroundColor: 'rgba(59, 130, 246, 0.7)', borderRadius: 8 }] }, options: { responsive: true, scales: { y: { ticks: { color: '#6b7280' } }, x: { ticks: { color: '#6b7280' } } }, plugins: { legend: { display: false }, title: { display: true, text: 'Most Common Student Concerns', color: '#374151', font: { size: 16 } } } } });
+            const engagementCtx = document.getElementById('engagement-chart').getContext('2d');
+            if(engagementChart) engagementChart.destroy();
+            engagementChart = new Chart(engagementCtx, { type: 'doughnut', data: { labels: ['AI Chat', 'Guides', 'Booking', 'Community'], datasets: [{ label: 'Feature Engagement', data: [300, 150, 90, 120], backgroundColor: ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B'] }] }, options: { responsive: true, plugins: { title: { display: true, text: 'Feature Usage', color: '#374151', font: { size: 16 } }, legend: { labels: { color: '#6b7280' } } } } });
+            chartUpdateInterval = setInterval(() => { issuesChart.data.datasets[0].data.forEach((_, i, arr) => arr[i] = Math.max(10, arr[i] + Math.floor(Math.random() * 10) - 5)); issuesChart.update(); engagementChart.data.datasets[0].data.forEach((_, i, arr) => arr[i] = Math.max(20, arr[i] + Math.floor(Math.random() * 20) - 10)); engagementChart.update(); }, 3000);
+        }
+
+        // --- GEMINI API FOR INSIGHTS ---
+        const API_KEY = "AIzaSyDJeT91IAoJNwYLvWM0PmiXcMW-vgB3lTU"; const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+        const MOCK_CHAT_LOGS = `User1: I'm so stressed about my finals. I can't sleep.\nUser2: The pressure from my parents is too much. I feel like I'm going to fail the semester.\nUser3: I miss home a lot. It's hard making friends.\nUser1: I just need some tips on how to manage my time better for exams.\nUser4: Is anyone else worried about getting a job after graduation? The competition is scary.`;
+        async function generateInsights() { const btn = document.getElementById('generate-insights-btn'); const outputDiv = document.getElementById('insights-output'); const contentDiv = document.getElementById('insights-content'); btn.textContent = 'Generating...'; btn.disabled = true; outputDiv.classList.add('hidden'); const prompt = `Analyze the following set of anonymous student chat snippets. Identify the top 3-4 recurring themes and, for each theme, provide a one-sentence summary of the core issue. Do not quote directly. Present the output as a simple bulleted list. Snippets:\n\n${MOCK_CHAT_LOGS}`; const payload = { contents: [{ parts: [{ text: prompt }] }] }; try { const response = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) throw new Error('API request failed'); const result = await response.json(); const text = result.candidates[0].content.parts[0].text; contentDiv.innerHTML = text.replace(/\* (.*?)\n/g, '<li class="ml-4 mb-2">$1</li>').replace(/\n/g, '<br>'); } catch (error) { contentDiv.textContent = 'Could not generate insights at this time.'; } finally { btn.textContent = 'Generate New Summary'; btn.disabled = false; outputDiv.classList.remove('hidden'); } }
+        
+        // --- GLOBAL INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('admin-login-page');
+            document.getElementById('generate-insights-btn').addEventListener('click', generateInsights);
+            document.getElementById('submit-admin-post-btn').addEventListener('click', () => { const textarea = document.getElementById('admin-post-textarea'); const content = textarea.value.trim(); if (!content) return; const newPost = { id: Date.now(), author: 'College Administration', content: content, timestamp: 'Just now', supports: 0, comments: 0 }; communityPosts.unshift(newPost); renderAdminPosts(); textarea.value = ''; });
+        });
+    </script>
+</body>
+</html>
+

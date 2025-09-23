@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manas Dost - Your Campus Wellness Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .typing-indicator span {
+            height: 8px; width: 8px; float: left; margin: 0 1px;
+            background-color: #9E9EA1; display: block; border-radius: 50%;
+            opacity: 0.4; animation: 1s blink infinite .3333s;
+        }
+        .typing-indicator span:nth-child(2) { animation-delay: .6666s; }
+        .typing-indicator span:nth-child(3) { animation-delay: .9999s; }
+        @keyframes blink { 50% { opacity: 1; } }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div id="app">
+
+        <!-- Landing Page Section -->
+        <section id="page-landing" class="min-h-screen flex flex-col">
+            <header class="bg-white/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
+                <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                         <div class="w-10 h-10 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h1 class="text-2xl font-bold">Manas Dost</h1>
+                    </div>
+                    <div class="space-x-2">
+                        <button onclick="showPage('login')" class="bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-blue-700 transition">Student Login</button>
+                        <button onclick="showPage('admin-login')" class="bg-gray-700 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-gray-800 transition">Admin Login</button>
+                    </div>
+                </div>
+            </header>
+            <main class="flex-grow flex items-center pt-16">
+                <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center md:text-left">
+                        <h2 class="text-5xl font-bold leading-tight text-gray-900">A confidential space for your mental wellness.</h2>
+                        <p class="mt-4 text-lg text-gray-600">Manas Dost is an AI-powered digital ecosystem providing accessible, stigma-free mental health support for college students across India.</p>
+                        <button onclick="showPage('login')" class="mt-8 bg-gradient-to-r from-blue-600 to-teal-500 text-white font-bold px-8 py-4 rounded-lg shadow-xl hover:scale-105 transform transition">Get Started as a Student</button>
+                    </div>
+                    <div>
+                         <div class="bg-white p-4 rounded-3xl shadow-2xl">
+                             <img src="https://placehold.co/600x400/E2E8F0/4A5568?text=Manas+Dost+Platform" alt="Manas Dost Platform Mockup" class="rounded-2xl">
+                         </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- Login Page Section -->
+        <section id="page-login" class="hidden min-h-screen flex items-center justify-center bg-gray-50 p-4">
+             <div class="w-full max-w-md">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div class="flex justify-center mb-4"><div class="w-12 h-12 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div></div>
+                    <h2 class="text-2xl font-bold mb-2">Student Login</h2>
+                    <p class="text-gray-600 mb-6">Welcome back to Manas Dost.</p>
+                    <form id="login-form">
+                        <input id="login-id" type="text" placeholder="Student ID" class="w-full p-3 mb-4 border rounded-lg">
+                        <input id="login-password" type="password" placeholder="Password" class="w-full p-3 mb-4 border rounded-lg">
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition">Login</button>
+                        <p id="login-error" class="text-red-500 text-sm mt-2 hidden"></p>
+                    </form>
+                    <p class="text-sm text-gray-600 mt-6">Don't have an account? <button onclick="showPage('signup')" class="font-semibold text-blue-600 hover:underline">Sign Up</button></p>
+                    <p class="text-sm text-gray-500 mt-4"><button onclick="showPage('landing')" class="hover:underline">← Back to Home</button></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Login Page Section -->
+        <section id="page-admin-login" class="hidden min-h-screen flex items-center justify-center bg-gray-50 p-4">
+             <div class="w-full max-w-md">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                    <div class="flex justify-center mb-4"><div class="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-900 rounded-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg></div></div>
+                    <h2 class="text-2xl font-bold mb-2">Admin Login</h2>
+                    <p class="text-gray-600 mb-6">Access the "Darpan" Dashboard</p>
+                    <div>
+                        <input id="admin-password" type="password" placeholder="Enter Access Code" class="w-full p-3 mb-4 border rounded-lg">
+                        <button onclick="loginAdmin()" class="w-full bg-gray-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-800 transition">Login</button>
+                        <p id="admin-error" class="text-red-500 text-sm mt-2 hidden"></p>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-6">Not an admin? <button onclick="showPage('login')" class="font-semibold text-blue-600 hover:underline">Student Login</button></p>
+                    <p class="text-sm text-gray-500 mt-4"><button onclick="showPage('landing')" class="hover:underline">← Back to Home</button></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sign-up Page Section -->
+        <section id="page-signup" class="hidden min-h-screen flex items-center justify-center bg-gray-50 p-4">
+            <div class="w-full max-w-md">
+                <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                     <div class="flex justify-center mb-4"><div class="w-12 h-12 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div></div>
+                    <h2 class="text-2xl font-bold mb-2">Create Student Account</h2>
+                    <p class="text-gray-600 mb-6">Only students with a valid ID can sign up.</p>
+                    <form id="signup-form">
+                        <input id="signup-name" type="text" placeholder="Full Name" class="w-full p-3 mb-4 border rounded-lg">
+                        <input id="signup-id" type="text" placeholder="Verified Student ID" class="w-full p-3 mb-4 border rounded-lg">
+                        <input id="signup-password" type="password" placeholder="Create Password" class="w-full p-3 mb-4 border rounded-lg">
+                        <input id="signup-confirm-password" type="password" placeholder="Confirm Password" class="w-full p-3 mb-4 border rounded-lg">
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition">Sign Up</button>
+                        <p id="signup-error" class="text-red-500 text-sm mt-2 hidden"></p>
+                        <p id="signup-success" class="text-green-500 text-sm mt-2 hidden"></p>
+                    </form>
+                    <p class="text-sm text-gray-600 mt-6">Already have an account? <button onclick="showPage('login')" class="font-semibold text-blue-600 hover:underline">Login</button></p>
+                    <p class="text-sm text-gray-500 mt-4"><button onclick="showPage('landing')" class="hover:underline">← Back to Home</button></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Student Panel Section -->
+        <section id="page-student-panel" class="hidden min-h-screen bg-gray-50">
+            <div class="flex h-screen">
+                <aside class="w-64 bg-white shadow-md flex-col hidden md:flex">
+                    <div class="p-6 flex items-center space-x-2 border-b"><div class="w-10 h-10 bg-gradient-to-br from-teal-400 to-blue-500 rounded-full flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><h1 class="text-xl font-bold">Manas Dost</h1></div>
+                    <nav class="flex-grow p-4 space-y-2">
+                        <button onclick="showStudentTab('student-home')" class="student-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg bg-blue-100 text-blue-700 font-semibold"><span>🏠</span><span>Home</span></button>
+                        <button onclick="showStudentTab('student-journeys')" class="student-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>🌱</span><span>Journeys</span></button>
+                        <button onclick="showStudentTab('student-tools')" class="student-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>🛠️</span><span>AI Tools</span></button>
+                        <button onclick="showStudentTab('student-community')" class="student-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>🤝</span><span>Peer Support</span></button>
+                        <button onclick="showStudentTab('student-chat')" class="student-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>🤖</span><span>Chat with Mitra</span></button>
+                        <button onclick="showStudentTab('student-booking')" class="student-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>📅</span><span>Book a Session</span></button>
+                        <button onclick="showStudentTab('student-emergency')" class="student-nav-btn w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100"><span>🚨</span><span>Emergency Help</span></button>
+                    </nav>
+                    <div class="p-4 border-t"><button onclick="logoutStudent()" class="w-full text-left flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-600"><span>🚪</span><span>Logout</span></button></div>
+                </aside>
+                <main class="flex-1 flex flex-col">
+                    <header class="bg-white p-4 border-b flex justify-between items-center">
+                         <div class="flex items-center">
+                             <button class="md:hidden mr-4" onclick="toggleSidebar()"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg></button>
+                            <h2 id="student-header-title" class="text-xl font-bold">Home</h2>
+                         </div>
+                         <div class="flex items-center space-x-4">
+                             <button onclick="goToAdminLogin()" class="text-blue-600 hover:text-blue-800 font-medium"></button>
+                          </div>
+                    </header>
+                    <div class="flex-1 p-4 md:p-8 overflow-y-auto">
+                        <div id="tab-student-home" class="student-tab h-full">
+                            <div class="h-full flex flex-col items-center justify-center text-center">
+                                <h2 class="text-3xl font-bold mb-2">Good morning, <span id="student-name-placeholder">Student</span>.</h2>
+                                <p class="text-gray-600 mb-6">How are you feeling today?</p>
+                                <div id="mood-check-in" class="flex space-x-2 md:space-x-4 mb-8">
+                                    <button onclick="selectMood('😞')" class="text-4xl p-2 rounded-full hover:bg-gray-200 transition">😞</button>
+                                    <button onclick="selectMood('😕')" class="text-4xl p-2 rounded-full hover:bg-gray-200 transition">😕</button>
+                                    <button onclick="selectMood('😐')" class="text-4xl p-2 rounded-full hover:bg-gray-200 transition">😐</button>
+                                    <button onclick="selectMood('🙂')" class="text-4xl p-2 rounded-full hover:bg-gray-200 transition">🙂</button>
+                                    <button onclick="selectMood('😊')" class="text-4xl p-2 rounded-full hover:bg-gray-200 transition">😊</button>
+                                </div>
+                                <div id="for-you-section" class="hidden w-full max-w-lg">
+                                    <div id="for-you-content" class="bg-white p-6 rounded-2xl shadow-lg"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-student-journeys" class="student-tab hidden">
+                            <h3 class="text-2xl font-bold mb-4">Wellness Journeys</h3>
+                            <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                <h4 class="text-xl font-bold">7-Day Challenge to Reduce Anxiety</h4>
+                                <p class="text-sm text-gray-500 mb-6">Complete one small task each day to build healthy habits.</p>
+                                <div id="journey-tasks" class="space-y-4"></div>
+                            </div>
+                        </div>
+                        <div id="tab-student-tools" class="student-tab hidden">
+                             <h3 class="text-2xl font-bold mb-4">AI-Powered Tools</h3>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                    <h4 class="text-xl font-bold">AI Goal Setter</h4>
+                                    <p class="text-sm text-gray-500 mb-4">Break down big tasks into small, manageable steps.</p>
+                                    <textarea id="goal-input" class="w-full p-2 border rounded-lg h-24" placeholder="e.g., I need to prepare for my history final exam..."></textarea>
+                                    <button id="generate-plan-btn" class="mt-2 bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg">Generate Plan</button>
+                                    <div id="goal-output" class="mt-4 prose prose-sm max-w-none hidden"></div>
+                                </div>
+                                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                                    <h4 class="text-xl font-bold">AI Journal Summary</h4>
+                                    <p class="text-sm text-gray-500 mb-4">Write in your private journal, then let AI find the patterns.</p>
+                                    <textarea id="journal-input" class="w-full p-2 border rounded-lg h-24" placeholder="Write about your day..."></textarea>
+                                    <button id="summarize-journal-btn" class="mt-2 bg-purple-600 text-white font-semibold px-5 py-2 rounded-lg">Summarize My Week</button>
+                                    <div id="journal-output" class="mt-4 prose prose-sm max-w-none hidden"></div>
+                                </div>
+                             </div>
+                        </div>
+                        <div id="tab-student-community" class="student-tab hidden">
+                             <div class="flex flex-wrap justify-between items-center gap-4 mb-6">
+                                <div class="flex items-center space-x-4">
+                                    <h3 class="text-2xl font-bold">Peer Support</h3>
+                                    <div class="flex space-x-2">
+                                        <button onclick="filterCommunity('all')" class="community-filter-btn bg-blue-600 text-white px-3 py-1 rounded-full text-sm">All Posts</button>
+                                        <button onclick="filterCommunity('exam')" class="community-filter-btn bg-white border px-3 py-1 rounded-full text-sm">#ExamStress</button>
+                                        <button onclick="filterCommunity('first-year')" class="community-filter-btn bg-white border px-3 py-1 rounded-full text-sm">#FirstYears</button>
+                                    </div>
+                                </div>
+                                <button onclick="openPostModal()" class="bg-green-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:bg-green-700 transition">Create New Post</button>
+                             </div>
+                             <div id="community-feed" class="space-y-6"></div>
+                        </div>
+                        <div id="tab-student-chat" class="student-tab hidden h-full max-h-[calc(100vh-10rem)] flex flex-col">
+                             <div class="bg-white rounded-2xl shadow-lg flex-1 flex flex-col">
+                                 <div id="chat-messages" class="flex-1 p-6 space-y-4 overflow-y-auto no-scrollbar"><div class="flex justify-start"><div class="p-3 rounded-xl max-w-lg bg-gray-200 text-gray-800">Hi there! I'm Mitra. How can I help you feel better today?</div></div></div>
+                                <div class="p-4 bg-gray-50 border-t flex items-center rounded-b-2xl"><input id="chat-input" type="text" placeholder="Type your message..." class="flex-1 p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"><button id="chat-send-btn" class="ml-3 p-3 bg-blue-500 text-white rounded-full hover:bg-blue-600"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg></button></div>
+                            </div>
+                        </div>
+                        <div id="tab-student-booking" class="student-tab hidden">
+                            <h3 class="text-2xl font-bold mb-4">Book a Confidential Session</h3>
+                            <p class="text-gray-500">This feature is coming soon. You will be able to book a private session with a campus counselor here.</p>
+                        </div>
+                        <div id="tab-student-emergency" class="student-tab hidden">
+                            <h2 class="text-3xl font-bold mb-4">Emergency Help 🚨</h2>
+                            <p class="text-gray-600 mb-8">If you need help immediately, please use these contacts. You can also add your own personal contacts.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="bg-red-100 p-6 rounded-2xl shadow-lg border border-red-200 text-center"><h3 class="text-xl font-bold text-red-800">College Helpline</h3><p class="mt-1 text-red-700">For any on-campus emergency.</p><a href="tel:18001234567" class="mt-4 inline-block bg-red-500 text-white font-bold px-6 py-3 rounded-lg shadow-md hover:bg-red-600 transition">Call Now: 1800-123-4567</a></div>
+                                <div class="bg-blue-100 p-6 rounded-2xl shadow-lg border border-blue-200 text-center"><h3 class="text-xl font-bold text-blue-800">Ambulance</h3><p class="mt-1 text-blue-700">For any medical emergency.</p><a href="tel:102" class="mt-4 inline-block bg-blue-500 text-white font-bold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">Call Now: 102</a></div>
+                            </div>
+                            <div class="bg-white p-6 rounded-2xl shadow-lg"><h3 class="text-2xl font-bold mb-4">Your Personal Contacts</h3><div class="space-y-4"><div><label class="block font-semibold text-gray-700">Contact 1 (e.g., Parent/Guardian)</label><input type="text" placeholder="Enter name" class="w-full mt-1 p-3 border rounded-lg"><input type="tel" placeholder="Enter phone number" class="w-full mt-2 p-3 border rounded-lg"></div><div><label class="block font-semibold text-gray-700">Contact 2 (e.g., Friend)</label><input type="text" placeholder="Enter name" class="w-full mt-1 p-3 border rounded-lg"><input type="tel" placeholder="Enter phone number" class="w-full mt-2 p-3 border rounded-lg"></div></div><button class="mt-6 bg-green-500 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-600 transition">Save Contacts</button></div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+        <!-- Post Modal -->
+        <div id="post-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50">
+            <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6">
+                <div class="flex justify-between items-center mb-4"><h4 class="text-xl font-semibold text-gray-800">Create a New Post</h4><button onclick="closePostModal()" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button></div>
+                <p class="text-sm text-gray-500 mb-4">Share what's on your mind. All posts are anonymous and moderated.</p>
+                <textarea id="post-main-textarea" class="w-full mt-4 p-3 border rounded-lg h-32" placeholder="I've been feeling really overwhelmed lately..."></textarea>
+                <div class="mt-4 bg-gray-50 p-4 rounded-lg">
+                    <label class="text-md font-semibold text-gray-700">Need help writing? ✨</label>
+                    <p class="text-xs text-gray-500">Type a few words, and our AI will help you get started.</p>
+                    <input type="text" id="post-keywords-input" class="w-full mt-2 p-2 border rounded-lg" placeholder="e.g., lonely, project stress, homesick">
+                    <button id="draft-post-btn" class="w-full md:w-auto mt-2 text-sm bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition">Help Me Write</button>
+                </div>
+                <button id="submit-post-btn" class="w-full mt-4 bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition">Post Anonymously</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- GLOBAL STATE & MOCK DATA ---
+        const pages = ['landing', 'login', 'signup', 'student-panel'];
+        const studentTabs = ['student-home', 'student-journeys', 'student-tools', 'student-community', 'student-chat', 'student-booking', 'student-emergency'];
+        const VALID_STUDENT_IDS = ['SIH001', 'SIH002', 'SIH003'];
+        let currentUser = null;
+        let journeyData = [ { day: 1, task: "Practice 2 minutes of mindful breathing.", completed: false }, { day: 2, task: "Write down three things you're grateful for.", completed: false }, { day: 3, task: "Go for a 15-minute walk without your phone.", completed: false }, { day: 4, task: "Listen to a calming music playlist.", completed: false }, { day: 5, task: "Write down any worries, then close the notebook.", completed: false }, { day: 6, task: "Reach out to a friend or family member.", completed: false }, { day: 7, task: "Reflect on your progress this week.", completed: false }, ];
+        let communityPosts = [ { id: 1, author: 'Anonymous Panda', content: "Is anyone else finding it hard to cope with the pressure of final year projects? Feeling really isolated.", tags: ['exam'] }, { id: 2, author: 'Anonymous Owl', content: "To the person who posted about project stress: you are not alone!", tags: ['exam'] }, { id: 3, author: 'Anonymous Fox', content: "Just feeling really homesick this week. Any tips?", tags: ['first-year'] }, ];
+        
+        // --- PAGE & TAB NAVIGATION ---
+        function showPage(pageId) { pages.forEach(id => document.getElementById(`page-${id}`).classList.add('hidden')); document.getElementById(`page-${pageId}`).classList.remove('hidden'); }
+        function showStudentTab(tabId) { 
+            studentTabs.forEach(id => {
+                const tab = document.getElementById(`tab-${id}`);
+                if (tab) tab.classList.add('hidden');
+            });
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if (targetTab) targetTab.classList.remove('hidden');
+            
+            document.querySelectorAll('.student-nav-btn').forEach(btn => { btn.classList.remove('bg-blue-100', 'text-blue-700', 'font-semibold'); btn.classList.add('hover:bg-gray-100'); }); 
+            const button = document.querySelector(`button[onclick="showStudentTab('${tabId}')"]`); 
+            if(button) {
+                button.classList.add('bg-blue-100', 'text-blue-700', 'font-semibold'); 
+                document.getElementById('student-header-title').textContent = button.textContent.trim().replace(/^[^\s]+\s/, ''); 
+            }
+        }
+        
+        // --- AUTHENTICATION ---
+        function getUsers() { return JSON.parse(localStorage.getItem('manasDostUsers') || '[]'); }
+        function saveUsers(users) { localStorage.setItem('manasDostUsers', JSON.stringify(users)); }
+        function handleLogin(e) { e.preventDefault(); const id = document.getElementById('login-id').value; const password = document.getElementById('login-password').value; const users = getUsers(); const user = users.find(u => u.id === id && u.password === password); if (user) { currentUser = user; document.getElementById('student-name-placeholder').textContent = user.name.split(' ')[0]; showPage('student-panel'); document.getElementById('login-form').reset(); } else { const errorEl = document.getElementById('login-error'); errorEl.textContent = 'Invalid Student ID or password.'; errorEl.classList.remove('hidden'); } }
+        function handleSignup(e) { e.preventDefault(); const name = document.getElementById('signup-name').value; const id = document.getElementById('signup-id').value; const password = document.getElementById('signup-password').value; const confirmPassword = document.getElementById('signup-confirm-password').value; const errorEl = document.getElementById('signup-error'); const successEl = document.getElementById('signup-success'); errorEl.classList.add('hidden'); successEl.classList.add('hidden'); if (!name || !id || !password || !confirmPassword) { errorEl.textContent = 'Please fill in all fields.'; return errorEl.classList.remove('hidden'); } if (password !== confirmPassword) { errorEl.textContent = 'Passwords do not match.'; return errorEl.classList.remove('hidden'); } if (!VALID_STUDENT_IDS.includes(id)) { errorEl.textContent = 'This Student ID is not recognized. Please use a valid ID.'; return errorEl.classList.remove('hidden'); } const users = getUsers(); if (users.find(u => u.id === id)) { errorEl.textContent = 'This Student ID is already registered.'; return errorEl.classList.remove('hidden'); } users.push({ name, id, password }); saveUsers(users); successEl.textContent = 'Sign up successful! Please log in.'; successEl.classList.remove('hidden'); document.getElementById('signup-form').reset(); setTimeout(() => showPage('login'), 1500); }
+        function logoutStudent() { currentUser = null; showPage('landing'); }
+        function loginAdmin() {
+            if (document.getElementById('admin-password').value === ACCESS_CODE) {
+                // Redirect to admin.html
+                window.location.href = "admin.html";
+            } else {
+                document.getElementById('admin-error').classList.remove('hidden');
+            }
+        }
+
+        // --- DYNAMIC HOME PAGE ---
+        function selectMood(mood) { document.querySelectorAll('#mood-check-in button').forEach(btn => { btn.classList.remove('bg-blue-200', 'scale-110'); }); const selectedBtn = Array.from(document.querySelectorAll('#mood-check-in button')).find(b => b.textContent === mood); selectedBtn.classList.add('bg-blue-200', 'scale-110'); const forYouSection = document.getElementById('for-you-section'); const forYouContent = document.getElementById('for-you-content'); let content = ''; if (['😞', '😕'].includes(mood)) { content = `<h4 class="font-bold">Feeling a bit down?</h4><p class="text-sm text-gray-600 my-2">That's okay. Sometimes a few deep breaths can make a difference. Try this simple 2-minute breathing exercise to calm your mind.</p><button class="bg-teal-500 text-white font-semibold px-4 py-2 rounded-lg text-sm">Start Breathing Exercise</button>`; } else if (['😐'].includes(mood)) { content = `<h4 class="font-bold">Just feeling 'meh'?</h4><p class="text-sm text-gray-600 my-2">A change of scenery can help. Why not take a short walk or check out some helpful guides in our AI Tools section?</p><button onclick="showStudentTab('student-tools')" class="bg-purple-500 text-white font-semibold px-4 py-2 rounded-lg text-sm">Explore AI Tools</button>`; } else { content = `<h4 class="font-bold">Great to see you're feeling positive!</h4><p class="text-sm text-gray-600 my-2">That's wonderful! Take a moment to capture this feeling. What's one thing you're grateful for today?</p><button onclick="showStudentTab('student-tools')" class="bg-green-500 text-white font-semibold px-4 py-2 rounded-lg text-sm">Open Journal</button>`; } forYouContent.innerHTML = content; forYouSection.classList.remove('hidden'); forYouSection.classList.add('fade-in'); }
+        
+        // --- WELLNESS JOURNEYS ---
+        function renderJourney() { const container = document.getElementById('journey-tasks'); container.innerHTML = ''; journeyData.forEach((item, index) => { const taskEl = document.createElement('div'); taskEl.className = 'flex items-center space-x-4 p-3 rounded-lg border'; taskEl.innerHTML = `<input type="checkbox" id="task-${index}" ${item.completed ? 'checked' : ''} onchange="toggleTask(${index})"><div class="flex-1"><label for="task-${index}" class="font-semibold ${item.completed ? 'line-through text-gray-500' : ''}">Day ${item.day}: ${item.task}</label></div>`; container.appendChild(taskEl); }); }
+        function toggleTask(index) { journeyData[index].completed = !journeyData[index].completed; renderJourney(); }
+
+        // --- COMMUNITY ---
+        function renderCommunityFeed(filter = 'all') { const feed = document.getElementById('community-feed'); feed.innerHTML = ''; const filteredPosts = filter === 'all' ? communityPosts : communityPosts.filter(p => p.tags.includes(filter)); filteredPosts.forEach(post => { const postEl = document.createElement('div'); postEl.className = 'bg-white p-5 rounded-xl shadow-md'; postEl.innerHTML = `<p class="text-gray-800">${post.content}</p><div class="border-t mt-3 pt-3 flex items-center justify-between"><button onclick="suggestReply(this, \`${post.content}\`)" class="text-sm bg-gray-200 px-3 py-1 rounded-full hover:bg-gray-300">Suggest a supportive reply ✨</button></div><div class="mt-3 space-y-2"></div>`; feed.appendChild(postEl); }); }
+        function filterCommunity(tag) { document.querySelectorAll('.community-filter-btn').forEach(btn => { btn.classList.remove('bg-blue-600', 'text-white'); btn.classList.add('bg-white', 'border'); }); const activeBtn = Array.from(document.querySelectorAll('.community-filter-btn')).find(b => b.textContent.toLowerCase().includes(tag)); activeBtn.classList.add('bg-blue-600', 'text-white'); renderCommunityFeed(tag); }
+        function openPostModal() { document.getElementById('post-modal').classList.remove('hidden'); }
+        function closePostModal() { document.getElementById('post-modal').classList.add('hidden'); }
+        function submitNewPost() { const textarea = document.getElementById('post-main-textarea'); const content = textarea.value.trim(); if (!content) return; const newPost = { id: Date.now(), author: 'Anonymous User', content, tags: [] }; communityPosts.unshift(newPost); renderCommunityFeed(); textarea.value = ''; document.getElementById('post-keywords-input').value = ''; closePostModal(); }
+        
+        // --- GEMINI API SETUP ---
+        const API_KEY = ""; const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+        async function callGeminiAPI(prompt, systemInstruction = "") {
+            const payload = { contents: [{ parts: [{ text: prompt }] }] };
+            if (systemInstruction) { payload.systemInstruction = { parts: [{ text: systemInstruction }] }; }
+            try { const response = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) return "Error connecting to AI."; const result = await response.json(); return result.candidates[0].content.parts[0].text; } catch (error) { return "Error connecting to AI."; }
+        }
+        async function suggestReply(buttonEl, postContent) { const container = buttonEl.parentElement.nextElementSibling; container.innerHTML = '<p class="text-xs text-gray-500">Generating suggestions...</p>'; const prompt = `A student wrote this in an anonymous forum: "${postContent}". Generate three short, empathetic, and non-judgmental reply options to show support. Use a simple, numbered list.`; const result = await callGeminiAPI(prompt); container.innerHTML = result.replace(/\d\. (.*?)(?=\n\d\.|$)/g, '<p class="text-sm p-2 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200">$1</p>'); }
+        async function handleSendMessage() { const chatInput = document.getElementById('chat-input'); const userMessage = chatInput.value.trim(); if (!userMessage) return; const chatMessages = document.getElementById('chat-messages'); const userDiv = document.createElement('div'); userDiv.className = 'flex justify-end'; userDiv.innerHTML = `<div class="p-3 rounded-xl max-w-lg bg-blue-500 text-white">${userMessage}</div>`; chatMessages.appendChild(userDiv); chatInput.value = ''; chatMessages.scrollTop = chatMessages.scrollHeight; const typingDiv = document.createElement('div'); typingDiv.id = 'typing-indicator'; typingDiv.className = 'flex justify-start'; typingDiv.innerHTML = `<div class="bg-gray-200 p-3 rounded-xl"><div class="typing-indicator"><span></span><span></span><span></span></div></div>`; chatMessages.appendChild(typingDiv); chatMessages.scrollTop = chatMessages.scrollHeight; const prompt = `...`; const responseText = await callGeminiAPI(prompt); document.getElementById('typing-indicator')?.remove(); const mitraDiv = document.createElement('div'); mitraDiv.className = 'flex justify-start'; mitraDiv.innerHTML = `<div class="p-3 rounded-xl max-w-lg bg-gray-200 text-gray-800">${responseText}</div>`; chatMessages.appendChild(mitraDiv); chatMessages.scrollTop = chatMessages.scrollHeight; }
+        
+        // --- GLOBAL INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // AUTH LISTENERS
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            document.getElementById('signup-form').addEventListener('submit', handleSignup);
+            // AI TOOLS LISTENERS
+            document.getElementById('generate-plan-btn').addEventListener('click', async function() { const btn = this; const input = document.getElementById('goal-input').value; const output = document.getElementById('goal-output'); if (!input) return; btn.textContent = 'Generating...'; output.classList.remove('hidden'); output.innerHTML = 'Thinking...'; const prompt = `Break down this task for a college student into a simple, actionable checklist: "${input}"`; const result = await callGeminiAPI(prompt); output.innerHTML = result.replace(/(\* |- |#) (.*?)\n/g, '<div class="flex items-center my-1"><input type="checkbox" class="mr-2 h-4 w-4"/><span>$2</span></div>'); btn.textContent = 'Generate Plan'; });
+            document.getElementById('summarize-journal-btn').addEventListener('click', async function() { const btn = this; const input = document.getElementById('journal-input').value; const output = document.getElementById('journal-output'); if (!input) return; btn.textContent = 'Summarizing...'; output.classList.remove('hidden'); output.innerHTML = 'Analyzing...'; const prompt = `Analyze these journal entries from a college student and provide a gentle, high-level summary of emotional trends. Do not quote directly. Entries: "${input}"`; const result = await callGeminiAPI(prompt); output.innerHTML = result; btn.textContent = 'Summarize My Week'; });
+            // COMMUNITY LISTENERS
+            document.getElementById('submit-post-btn').addEventListener('click', submitNewPost);
+            document.getElementById('draft-post-btn').addEventListener('click', async function() { const btn = this; const keywords = document.getElementById('post-keywords-input').value; const textarea = document.getElementById('post-main-textarea'); if(!keywords) return; btn.textContent = 'Drafting...'; const prompt = `Help a college student write an anonymous post for a peer support forum based on these keywords. The tone should be gentle and encourage others to share experiences. Keywords: "${keywords}"`; textarea.value = await callGeminiAPI(prompt); btn.textContent = 'Help Me Write'; });
+            // CHAT LISTENERS
+            document.getElementById('chat-send-btn').addEventListener('click', handleSendMessage);
+            document.getElementById('chat-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSendMessage(); });
+
+            // Initial render
+            showPage('landing');
+            renderJourney();
+            renderCommunityFeed();
+        });
+    </script>
+</body>
+</html>
+
